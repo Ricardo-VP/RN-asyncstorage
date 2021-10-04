@@ -13,7 +13,7 @@ const App = () => {
   return (
     <>
       <View style={styles.contenedor}>
-        <TextInput style={styles.input}/>
+        <TextInput placeholder="Escribe tu nombre" style={styles.input}/>
         <Button title="Guardar" color="#333"/>
         <TouchableHighlight style={styles.btnEliminar}>
           <Text style={styles.txtEliminar}>Eliminar Nombre &times;</Text>
