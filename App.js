@@ -10,13 +10,12 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 
 const App = () => {
-
   const [inputTexto, setInputTexto] = useState(''); // Estado inicial
   const [nombreStorage, setNombreStorage] = useState(''); // Estado inicial
 
   useEffect(() => {
     obtenerDatosStorage();
-  }, [])
+  }, []);
 
   const guardarDatos = async () => {
     try {
@@ -39,19 +38,32 @@ const App = () => {
     }
   };
 
+  const eliminarDatos = async () => {
+    try {
+      await AsyncStorage.removeItem('nombre'); // Eliminar datos
+      setNombreStorage(''); // Actualizar el estado
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <View style={styles.contenedor}>
-        <Text>Hola: {nombreStorage}</Text>
+        {nombreStorage ? <Text>Hola: {nombreStorage}</Text> : null}
         <TextInput
           placeholder="Escribe tu nombre"
           style={styles.input}
           onChangeText={texto => setInputTexto(texto)}
         />
         <Button title="Guardar" color="#333" onPress={() => guardarDatos()} />
-        <TouchableHighlight style={styles.btnEliminar}>
-          <Text style={styles.txtEliminar}>Eliminar Nombre &times;</Text>
-        </TouchableHighlight>
+        {nombreStorage ? (
+          <TouchableHighlight
+            onPress={() => eliminarDatos()}
+            style={styles.btnEliminar}>
+            <Text style={styles.txtEliminar}>Eliminar Nombre &times;</Text>
+          </TouchableHighlight>
+        ) : null}
       </View>
     </>
   );
